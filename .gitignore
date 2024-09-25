@@ -1,0 +1,66 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Diretórios do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de ambiente
+.env
+.env.*.local
+
+# Dependências
+/node_modules
+.pnpm
+/package-lock.json
+/yarn.lock
+.pnpm-lock.yaml
+
+# Pastas de build/output
+/dist
+/build
+/.next
+/out
+/.nuxt
+/.cache
+/.vercel
+
+# Editor de código
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# TypeScript
+*.tsbuildinfo
+/tsconfig.tsbuildinfo
+
+# Teste e coverage
+/coverage
+*.test.js
+*.test.ts
+/.nyc_output
+/test-output
+
+# Configurações específicas do sistema
+*.local
+.local/
+.c9/
+.history/
+
+# Pastas temporárias
+tmp/
+temp/
+*.tmp
+
+# Configurações de linter/formatter locais
+.eslintcache
+/prettier.cache
+
+# Arquivos de Git
+*.orig

@@ -16,7 +16,6 @@ export const GlobalStyle = createGlobalStyle`
     body {
         margin: 0;
         font-family: ${({ theme }) => theme.fonts.primary};
-        background-color: ${({ theme }) => theme.colors.white};
         color: ${({ theme }) => theme.colors.peach};
         line-height: 1.6; 
     }

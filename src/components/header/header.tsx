@@ -6,8 +6,10 @@ import { CustomHeader } from "./header.styled"
 function Header() {
   return (
     <CustomHeader>
-      <Link to='/'>LOGO</Link>
-      <NavMenu />
+      <section>
+        <Link to='/'>LOGO</Link>
+        <NavMenu />
+      </section>
     </CustomHeader>
   )
 }

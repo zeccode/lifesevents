@@ -17,7 +17,9 @@ const MainLayout = ({ children }: ComponentProps) => {
         <GlobalStyle />
         <ComponenteEnvolvente>
           <Header />
-          <div>{children}</div>
+          <div>
+            {children}
+          </div>
           <Footer />
         </ComponenteEnvolvente>
       </ThemeProvider>

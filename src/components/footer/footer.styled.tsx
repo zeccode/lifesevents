@@ -6,7 +6,8 @@ export const CustomFooter = styled.footer`
     position: absolute;
     bottom: 0;
     left: 0;
-
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.white};
     p{
         text-align: center;
     }

@@ -1,9 +1,10 @@
+import { CustomFooter } from "./footer.styled"
 
 const Footer = () => {
   return (
-    <footer>
-      <p>&copy; 2024 ZeeCode</p>
-    </footer>
+    <CustomFooter>
+      <p>&copy; 2024 - Todos os direitos reservados a ZeeCode.</p>
+    </CustomFooter>
   )
 }
 

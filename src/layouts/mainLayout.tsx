@@ -4,6 +4,7 @@ import { Footer } from '../components/footer';
 import { GlobalStyle } from './globalStyle';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
+import { ComponenteEnvolvente } from './mainLayout.styled';
 
 type ComponentProps = {
   children: React.ReactNode;
@@ -14,9 +15,11 @@ const MainLayout = ({ children }: ComponentProps) => {
     <Fragment>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Header />
-        <div>{children}</div>
-        <Footer />
+        <ComponenteEnvolvente>
+          <Header />
+          <div>{children}</div>
+          <Footer />
+        </ComponenteEnvolvente>
       </ThemeProvider>
     </Fragment>
   )

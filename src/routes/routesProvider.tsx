@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import Home from '../pages/home'
 import MainLayout from "../layouts/mainLayout"
 import NotFound from "../pages/notFound"
+import About from "../pages/about/about"
 
 
 const RouteProvider = () => {
@@ -12,7 +13,7 @@ const RouteProvider = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Home />} />
-          <Route path='/about' element={<Home pageName="Sobre" />} />
+          <Route path='/about' element={<About/>} />
           <Route path='/contact-us' element={<Home pageName="Fale Conosco" />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

@@ -3,5 +3,9 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./src"], // ajuste o caminho conforme necessário
+    "types": ["styled-components"]
+  }
 }

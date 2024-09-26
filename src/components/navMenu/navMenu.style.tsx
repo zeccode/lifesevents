@@ -1,13 +1,22 @@
-import { styled } from 'styled-components'
+import { styled } from "styled-components";
 
-export const CustomMenu = styled.nav`
-    ul{
-        width: 100%;
-        height: 50px;
-        display: flex;
-        justify-content: center;
-        flex-direction: row;
-        gap: 40px;
-        align-items: center;
+interface CustomMenuProps {
+  mobile?: boolean; // mobile é opcional
+}
+
+export const CustomMenu = styled.nav<CustomMenuProps>`
+  ul {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ${(props) =>
+      props.mobile
+        ? "flex-direction: column;"
+        : "flex-direction: row; gap: 40px;"}
+    li {
+      height: 50px;
+      line-height: 50px;
     }
-`
+  }
+`;

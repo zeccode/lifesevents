@@ -1,21 +1,25 @@
-
-import { Link } from "react-router-dom"
-import MenuList from './menuList';
+import MenuList from "./menuList";
 import { CustomMenu } from "./navMenu.style";
+import { Link } from "react-router-dom";
 
+type props = {
+  mobile?: boolean;
+};
 
-
-const NavMenu = () => {
-
+const NavMenu = ({ mobile }: props) => {
   return (
-    <CustomMenu>
-      <ul>
-        {MenuList.map((menuItem) => {
-          return (<li><Link to={`${menuItem.url}`}>{menuItem.label}</Link></li>)
-        })}
-      </ul>
+    <CustomMenu mobile={mobile}>
+      <nav>
+        <ul>
+          {MenuList.map((item, i) => (
+            <li key={i}>
+              <Link to={item.url}>{item.label}</Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </CustomMenu>
-  )
-}
+  );
+};
 
-export default NavMenu
+export default NavMenu;

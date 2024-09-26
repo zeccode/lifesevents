@@ -16,7 +16,7 @@ export const GlobalStyle = createGlobalStyle`
     body {
         margin: 0;
         font-family: ${({ theme }) => theme.fonts.primary};
-        color: ${({ theme }) => theme.colors.peach};
+        color: ${({ theme }) => theme.colors.black};
         line-height: 1.6; 
     }
 
@@ -57,14 +57,14 @@ export const GlobalStyle = createGlobalStyle`
     }
     /* Estilos de Aviso, Alerta, Sucesso e Informativo */
     .alert {
-        background-color: ${({ theme }) => theme.status.error};
+        background-color: ${({ theme }) => theme.status.danger};
         color: white;
         padding: 1em;
         border-radius: 4px;
     }
 
     .success {
-        background-color: ${({ theme }) => theme.colors.success};
+        background-color: ${({ theme }) => theme.status.info};
         color: white;
         padding: 1em;
         border-radius: 4px;

@@ -3,14 +3,14 @@ import { styled } from "styled-components";
 export const ComponenteEnvolvente = styled.main`
   width: 100%;
   min-height: 100vh;
-  padding-bottom: 90px;
+  padding: 64px 0 90px;
   position: relative;
   background-color: ${({ theme }) => theme.colors.white};
 
   section {
     width: 100%;
     max-width: 1280px;
-    margin: 0 auto;
+    margin: 50px auto;
     padding: 20px;
 
     /* Quando a section contém um aside */

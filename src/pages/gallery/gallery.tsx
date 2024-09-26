@@ -10,11 +10,11 @@ const Gallery = () => {
           <img
             srcSet={`${baseURL}${item.img}?w=161&fit=crop&auto=format&dpr=2 2x`}
             src={`${baseURL}${item.img}?w=161&fit=crop&auto=format`}
-            alt={item.title}
+            alt={item.description}
             loading="lazy"
           />
           <CustomLabel>
-            <p>{item.description}</p>
+            <p>{item.title}</p>
           </CustomLabel>
         </ImageContainer>
       ))}

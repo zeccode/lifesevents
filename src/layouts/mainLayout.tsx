@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react'
-import { Header } from '../components/header';
-import { Footer } from '../components/footer';
-import { GlobalStyle } from './globalStyle';
-import { ThemeProvider } from 'styled-components';
-import { theme } from './theme';
-import { ComponenteEnvolvente } from './mainLayout.styled';
+import React, { Fragment } from "react";
+import { Header } from "../components/header";
+import { Footer } from "../components/footer";
+import { GlobalStyle } from "./globalStyle";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./theme";
+import { ComponenteEnvolvente } from "./mainLayout.styled";
 
 type ComponentProps = {
   children: React.ReactNode;
-}
+};
 
 const MainLayout = ({ children }: ComponentProps) => {
   return (
@@ -17,14 +17,12 @@ const MainLayout = ({ children }: ComponentProps) => {
         <GlobalStyle />
         <ComponenteEnvolvente>
           <Header />
-          <div>
-            {children}
-          </div>
+          <div>{children}</div>
           <Footer />
         </ComponenteEnvolvente>
       </ThemeProvider>
     </Fragment>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;

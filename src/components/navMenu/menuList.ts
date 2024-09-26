@@ -6,7 +6,7 @@ type MenuListType = {
 const MenuList: MenuListType[] = [
   {
     label: "Home",
-    url: "/home",
+    url: "/",
   },
   {
     label: "Sobre",

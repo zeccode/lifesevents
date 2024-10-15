@@ -1,0 +1,270 @@
+import React, { useState } from "react";
+import styled from "styled-components";
+import InputMask from "react-input-mask";
+
+const ContactForm: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+    form: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: "" }); // Clear error message on change
+  };
+
+  const validate = (): boolean => {
+    const newErrors = { ...errors };
+    let isValid = true;
+
+    if (!formData.name) {
+      newErrors.name = "Nome é obrigatório.";
+      isValid = false;
+    }
+    if (!formData.email) {
+      newErrors.email = "Email é obrigatório.";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email inválido.";
+      isValid = false;
+    }
+    if (!formData.phone) {
+      newErrors.phone = "Telefone é obrigatório.";
+      isValid = false;
+    }
+    if (!formData.subject) {
+      newErrors.subject = "Assunto é obrigatório.";
+      isValid = false;
+    }
+    if (!formData.message) {
+      newErrors.message = "Mensagem é obrigatória.";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    setIsSubmitting(true);
+    setSuccessMessage("");
+
+    // Limpar os campos de telefone e email
+    const cleanedFormData = {
+      ...formData,
+      email: formData.email.trim(),
+      phone: formData.phone.replace(/\D/g, ""), // Remove todos os caracteres não numéricos
+    };
+
+    try {
+      // Simulando envio para uma API fictícia
+      const response = await fetch("https://api.ficticia.com/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cleanedFormData), // Usando os dados limpos
+      });
+
+      if (response.ok) {
+        setSuccessMessage("Mensagem enviada com sucesso!");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        throw new Error("Erro ao enviar mensagem.");
+      }
+    } catch (error) {
+      console.error(error);
+      setErrors({ ...errors, form: "Erro ao enviar mensagem." });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <FormContainer onSubmit={handleSubmit}>
+      <h2>Vamos Conectar? Envie Sua Mensagem!</h2>
+      {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
+      <InputGroup>
+        <Label htmlFor="name">Nome:</Label>
+        <Input
+          type="text"
+          id="name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+        {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+      </InputGroup>
+
+      <InputGroup>
+        <Label htmlFor="email">Email:</Label>
+        <Input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+      </InputGroup>
+
+      <InputGroup>
+        <Label htmlFor="phone">Telefone:</Label>
+        <InputMask
+          mask="(99) 99999-9999"
+          value={formData.phone}
+          onChange={handleChange}
+        >
+          {() => <Input type="tel" id="phone" name="phone" required />}
+        </InputMask>
+        {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
+      </InputGroup>
+
+      <InputGroup>
+        <Label htmlFor="subject">Assunto:</Label>
+        <Select
+          id="subject"
+          name="subject"
+          value={formData.subject}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Selecione um assunto</option>
+          <option value="dúvida">Dúvida</option>
+          <option value="sugestão">Sugestão</option>
+          <option value="reclamação">Reclamação</option>
+          <option value="outro">Outro</option>
+        </Select>
+        {errors.subject && <ErrorMessage>{errors.subject}</ErrorMessage>}
+      </InputGroup>
+
+      <InputGroup>
+        <Label htmlFor="message">Mensagem:</Label>
+        <TextArea
+          id="message"
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
+          required
+        />
+        {errors.message && <ErrorMessage>{errors.message}</ErrorMessage>}
+      </InputGroup>
+
+      <SubmitButton type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
+      </SubmitButton>
+
+      {errors.form && <ErrorMessage>{errors.form}</ErrorMessage>}
+    </FormContainer>
+  );
+};
+
+// Styled Components
+const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: 0 auto;
+`;
+
+const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Label = styled.label`
+  margin-bottom: 5px;
+  font-weight: bold;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.primary};
+    outline: none;
+  }
+`;
+
+const Select = styled.select`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.primary};
+    outline: none;
+  }
+`;
+
+const TextArea = styled.textarea`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none; /* Impede o redimensionamento do TextArea */
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.primary};
+    outline: none;
+  }
+`;
+
+const SubmitButton = styled.button`
+  padding: 10px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.secondary};
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+`;
+
+const SuccessMessage = styled.p`
+  color: ${({ theme }) => theme.status.success};
+  font-weight: bold;
+`;
+
+const ErrorMessage = styled.span`
+  color: ${({ theme }) => theme.status.danger};
+  font-size: 0.9em;
+`;
+
+export default ContactForm;

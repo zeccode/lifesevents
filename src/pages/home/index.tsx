@@ -1,14 +1,14 @@
-type Props = {
-  pageName?: string;
-};
+import MainBanner from "../../components/mainBanner";
+import Plans from "../../components/plans";
 
-const index = ({ pageName }: Props) => {
+const index = () => {
   return (
-    <section>
-      {pageName ? pageName : "Home"}
-      <h1>TechEvents Pro</h1>
-      <p>Especialistas em Gestão de Eventos, Tecnologia e Inovação</p>
-    </section>
+    <>
+      <MainBanner />
+      <section>
+        <Plans />
+      </section>
+    </>
   );
 };
 

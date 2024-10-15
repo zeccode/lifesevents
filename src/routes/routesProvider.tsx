@@ -5,6 +5,7 @@ import MainLayout from "../layouts/mainLayout";
 import NotFound from "../pages/notFound";
 import About from "../pages/about/about";
 import Gallery from "../pages/gallery/gallery";
+import Contact from "../pages/contact";
 
 const RouteProvider = () => {
   return (
@@ -15,10 +16,7 @@ const RouteProvider = () => {
           <Route path="/login" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/gallery" element={<Gallery />} />
-          <Route
-            path="/contact-us"
-            element={<Home pageName="Fale Conosco" />}
-          />
+          <Route path="/contact-us" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MainLayout>

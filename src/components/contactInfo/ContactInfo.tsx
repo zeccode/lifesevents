@@ -58,7 +58,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 15px;
   padding: 20px;
-  border: 1px solid #ddd;
+  /* color: ${({ theme }) => theme.colors.primary}; */
   border-radius: 8px;
   max-width: 100%;
   margin: 0 auto;
@@ -83,10 +83,11 @@ const ContactText = styled.div`
 
 const Label = styled.span`
   font-weight: bold;
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 const Link = styled.a`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secondary};
   text-decoration: none;
   &:hover {
     text-decoration: underline;

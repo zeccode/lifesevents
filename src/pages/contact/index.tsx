@@ -9,7 +9,7 @@ function Contact() {
   return (
     <>
       <section>
-        <Grid container spacing={4}>
+        <Grid container spacing={6}>
           <Grid size={{ xs: 12, md: 12 }} textAlign="left">
             <SectionTitle variant="h4">
               Vamos nos conectar? Envie Sua Mensagem!

@@ -289,7 +289,7 @@ const TextArea = styled.textarea`
 
 const SubmitButton = styled.button`
   padding: 10px;
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.secondary};
   color: white;
   border: none;
   border-radius: 5px;
@@ -297,7 +297,7 @@ const SubmitButton = styled.button`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.secondary};
+    background-color: ${({ theme }) => theme.colors.primary};
   }
 
   &:disabled {

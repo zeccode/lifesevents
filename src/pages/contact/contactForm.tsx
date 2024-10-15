@@ -3,24 +3,18 @@ import styled from "styled-components";
 import InputMask from "react-input-mask";
 
 const ContactForm: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const initForm = {
     name: "",
     email: "",
     phone: "",
     subject: "",
     message: "",
-  });
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-    form: "",
-  });
+  };
+  const [formData, setFormData] = useState({ ...initForm });
+  const [errors, setErrors] = useState({ ...initForm, form: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-
+  const maxMessageLength = 250;
   const handleChange = (
     e: React.ChangeEvent<
       HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement
@@ -174,8 +168,13 @@ const ContactForm: React.FC = () => {
           name="message"
           value={formData.message}
           onChange={handleChange}
+          maxLength={maxMessageLength}
+          onPaste={(e) => e.preventDefault()}
           required
         />
+        {formData.message && (
+          <Counter>{maxMessageLength - formData.message.length}</Counter>
+        )}
         {errors.message && <ErrorMessage>{errors.message}</ErrorMessage>}
       </InputGroup>
 
@@ -200,8 +199,15 @@ const FormContainer = styled.form`
 const InputGroup = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
+const Counter = styled.small`
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+`;
 const Label = styled.label`
   margin-bottom: 5px;
   font-weight: bold;
@@ -229,6 +235,7 @@ const Select = styled.select`
 
 const TextArea = styled.textarea`
   padding: 10px;
+  height: 120px;
   border: 1px solid #ccc;
   border-radius: 5px;
   resize: none; /* Impede o redimensionamento do TextArea */

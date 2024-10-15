@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { FaCheckCircle } from "react-icons/fa"; // Ícone de check
+import { CheckCircle } from "@mui/icons-material"; // Ícone de check
+import { Typography, Card as MuiCard, CardContent } from "@mui/material"; // Componentes do Material UI
 
 type Plan = {
   title: string;
@@ -63,32 +64,42 @@ const Plans: React.FC = () => {
 
   return (
     <Container>
-      <SectionTitle>Confira Nossos Planos</SectionTitle>
+      <SectionTitle variant="h4">Confira Nossos Planos</SectionTitle>
       <SectionDescription>
         Escolha o plano ideal para a gestão e execução do seu evento. Oferecemos
         opções que se adaptam a diferentes necessidades e tamanhos de evento.
         Torne seu evento inesquecível com a nossa ajuda!
       </SectionDescription>
       {plansData.map((plan, index) => (
-        <Card
+        <MuiCard
           key={index}
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
-          isHovered={hoveredIndex === index}
-          isBlurred={hoveredIndex !== null && hoveredIndex !== index}
-          isHighlighted={plan.isHighlighted}
+          style={{
+            width: "250px",
+            margin: "10px",
+            border: plan.isHighlighted ? "2px solid #1976d2" : "none",
+            transform: hoveredIndex === index ? "scale(1.05)" : "scale(1)",
+            filter:
+              hoveredIndex !== null && hoveredIndex !== index
+                ? "blur(1.5px)"
+                : "none",
+            transition: "transform 0.3s ease, filter 0.3s ease",
+          }}
         >
-          <Title>{plan.title}</Title>
-          <Description>{plan.description}</Description>
-          <Price>{plan.price}</Price>
-          <Features>
-            {plan.features.map((feature, i) => (
-              <Feature key={i}>
-                <FaCheckCircle className="icon" /> <span>{feature}</span>
-              </Feature>
-            ))}
-          </Features>
-        </Card>
+          <CardContent>
+            <Title variant="h5">{plan.title}</Title>
+            <Description>{plan.description}</Description>
+            <Price>{plan.price}</Price>
+            <Features>
+              {plan.features.map((feature, i) => (
+                <Feature key={i}>
+                  <CheckCircle className="icon" /> <span>{feature}</span>
+                </Feature>
+              ))}
+            </Features>
+          </CardContent>
+        </MuiCard>
       ))}
     </Container>
   );
@@ -102,43 +113,21 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-const Card = styled.div<{
-  isHovered: boolean;
-  isBlurred: boolean;
-  isHighlighted?: boolean;
-}>`
-  width: 250px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  background-color: "#fff";
-  border: ${({ isHighlighted, theme }) =>
-    isHighlighted ? `2px solid ${theme.colors.primary};` : "none"};
-  transition: transform 0.3s ease, filter 0.3s ease;
-  filter: ${({ isBlurred }) => (isBlurred ? "blur(1.5px)" : "none")};
-  transform: ${({ isHovered }) => (isHovered ? "scale(1.05)" : "scale(1)")};
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const Title = styled.h4`
-  font-size: 1.5em;
+const Title = styled(Typography)`
   margin-bottom: 10px;
-  color: #666;
+  color: ${(props) => props.theme.colors.gray};
   font-weight: 400;
 `;
 
-const Description = styled.p`
+const Description = styled(Typography)`
   font-size: 1em;
-  color: #666;
+  color: ${(props) => props.theme.colors.gray};
 `;
 
-const Price = styled.p`
+const Price = styled(Typography)`
   font-size: 1.2em;
   font-weight: bold;
-  color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.primary};
   margin: 10px 0;
 `;
 
@@ -165,15 +154,16 @@ const Feature = styled.li`
     text-align: left;
   }
 `;
-const SectionTitle = styled.h1`
+
+const SectionTitle = styled(Typography)`
   font-size: 2.5em;
   color: ${(props) => props.theme.colors.primary};
   margin-bottom: 10px;
 `;
 
-const SectionDescription = styled.p`
+const SectionDescription = styled(Typography)`
   font-size: 1.2em;
-  color: ${(props) => props.theme.colors.gray};
+  color: #777; /* Cor para a descrição */
   margin-bottom: 30px;
   text-align: center;
 `;

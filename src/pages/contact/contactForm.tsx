@@ -113,7 +113,6 @@ const ContactForm: React.FC = () => {
 
   return (
     <FormContainer onSubmit={handleSubmit}>
-      <h2>Vamos nos conectar? Envie Sua Mensagem!</h2>
       {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
 
       {/* Campos de entrada com placeholders */}
@@ -235,7 +234,7 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-width: 400px;
+  max-width: 100%;
   margin: 0 auto;
 `;
 

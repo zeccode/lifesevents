@@ -8,13 +8,16 @@ const ContactForm: React.FC = () => {
     email: "",
     phone: "",
     subject: "",
+    customSubject: "",
     message: "",
   };
   const [formData, setFormData] = useState({ ...initForm });
   const [errors, setErrors] = useState({ ...initForm, form: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [isCustomSubjectRequired, setIsCustomSubjectRequired] = useState(false);
   const maxMessageLength = 250;
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement
@@ -22,7 +25,14 @@ const ContactForm: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: "" }); // Clear error message on change
+    setErrors({ ...errors, [name]: "" });
+
+    if (name === "subject" && value === "outro") {
+      setIsCustomSubjectRequired(true);
+    } else if (name === "subject") {
+      setIsCustomSubjectRequired(false);
+      setFormData({ ...formData, [name]: value, customSubject: "" });
+    }
   };
 
   const validate = (): boolean => {
@@ -48,6 +58,10 @@ const ContactForm: React.FC = () => {
       newErrors.subject = "Assunto é obrigatório.";
       isValid = false;
     }
+    if (isCustomSubjectRequired && !formData.customSubject) {
+      newErrors.customSubject = "Assunto personalizado é obrigatório.";
+      isValid = false;
+    }
     if (!formData.message) {
       newErrors.message = "Mensagem é obrigatória.";
       isValid = false;
@@ -64,32 +78,28 @@ const ContactForm: React.FC = () => {
     setIsSubmitting(true);
     setSuccessMessage("");
 
-    // Limpar os campos de telefone e email
     const cleanedFormData = {
       ...formData,
+      subject: isCustomSubjectRequired
+        ? formData.customSubject
+        : formData.subject,
       email: formData.email.trim(),
-      phone: formData.phone.replace(/\D/g, ""), // Remove todos os caracteres não numéricos
+      phone: formData.phone.replace(/\D/g, ""),
+      customSubject: undefined,
     };
 
     try {
-      // Simulando envio para uma API fictícia
       const response = await fetch("https://api.ficticia.com/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(cleanedFormData), // Usando os dados limpos
+        body: JSON.stringify(cleanedFormData),
       });
 
       if (response.ok) {
         setSuccessMessage("Mensagem enviada com sucesso!");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          subject: "",
-          message: "",
-        });
+        setFormData({ ...initForm });
       } else {
         throw new Error("Erro ao enviar mensagem.");
       }
@@ -103,8 +113,10 @@ const ContactForm: React.FC = () => {
 
   return (
     <FormContainer onSubmit={handleSubmit}>
-      <h2>Vamos Conectar? Envie Sua Mensagem!</h2>
+      <h2>Vamos nos conectar? Envie Sua Mensagem!</h2>
       {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
+
+      {/* Campos de entrada com placeholders */}
       <InputGroup>
         <Label htmlFor="name">Nome:</Label>
         <Input
@@ -114,6 +126,7 @@ const ContactForm: React.FC = () => {
           value={formData.name}
           onChange={handleChange}
           required
+          placeholder="Digite seu nome"
         />
         {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
       </InputGroup>
@@ -127,6 +140,7 @@ const ContactForm: React.FC = () => {
           value={formData.email}
           onChange={handleChange}
           required
+          placeholder="Digite seu email"
         />
         {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
       </InputGroup>
@@ -138,7 +152,15 @@ const ContactForm: React.FC = () => {
           value={formData.phone}
           onChange={handleChange}
         >
-          {() => <Input type="tel" id="phone" name="phone" required />}
+          {() => (
+            <Input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              placeholder="(00) 00000-0000"
+            />
+          )}
         </InputMask>
         {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
       </InputGroup>
@@ -153,13 +175,33 @@ const ContactForm: React.FC = () => {
           required
         >
           <option value="">Selecione um assunto</option>
-          <option value="dúvida">Dúvida</option>
-          <option value="sugestão">Sugestão</option>
-          <option value="reclamação">Reclamação</option>
-          <option value="outro">Outro</option>
+          <option value="duvida">Dúvida</option>
+          <option value="orcamento">Orçamento</option>
+          <option value="sugestao">Sugestão</option>
+          <option value="reclamacao">Reclamação</option>
+          <option value="outro">Outro assunto</option>
         </Select>
         {errors.subject && <ErrorMessage>{errors.subject}</ErrorMessage>}
       </InputGroup>
+
+      {/* Campo para assunto personalizado */}
+      {isCustomSubjectRequired && (
+        <InputGroup>
+          <Label htmlFor="customSubject">Descreva o assunto:</Label>
+          <Input
+            type="text"
+            id="customSubject"
+            name="customSubject"
+            value={formData.customSubject}
+            onChange={handleChange}
+            required
+            placeholder="Digite aqui o assunto"
+          />
+          {errors.customSubject && (
+            <ErrorMessage>{errors.customSubject}</ErrorMessage>
+          )}
+        </InputGroup>
+      )}
 
       <InputGroup>
         <Label htmlFor="message">Mensagem:</Label>
@@ -171,6 +213,7 @@ const ContactForm: React.FC = () => {
           maxLength={maxMessageLength}
           onPaste={(e) => e.preventDefault()}
           required
+          placeholder="Escreva sua mensagem aqui"
         />
         {formData.message && (
           <Counter>{maxMessageLength - formData.message.length}</Counter>

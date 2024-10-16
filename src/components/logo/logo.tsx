@@ -1,10 +1,10 @@
 import { CustomLogo } from "./logo.style";
-import LogoSVG from "/assets/imgs/logo.svg";
 
 const Logo = () => {
+  const LogoSVG = "/assets/imgs/logo.svg";
   return (
     <CustomLogo>
-      <img src={LogoSVG} alt="Descrição da Imagem" />
+      <img src={LogoSVG} alt="LifeTech Events" />
     </CustomLogo>
   );
 };

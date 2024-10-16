@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import InputMask from "react-input-mask";
 
 const ContactForm: React.FC = () => {
   const initForm = {
@@ -146,21 +145,15 @@ const ContactForm: React.FC = () => {
 
       <InputGroup>
         <Label htmlFor="phone">Telefone:</Label>
-        <InputMask
-          mask="(99) 99999-9999"
+        <Input
+          type="tel"
+          id="phone"
+          name="phone"
+          required
+          placeholder="(00) 00000-0000"
           value={formData.phone}
           onChange={handleChange}
-        >
-          {() => (
-            <Input
-              type="tel"
-              id="phone"
-              name="phone"
-              required
-              placeholder="(00) 00000-0000"
-            />
-          )}
-        </InputMask>
+        />
         {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
       </InputGroup>
 

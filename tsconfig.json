@@ -5,7 +5,10 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "outDir": "./dist",
     "typeRoots": ["./node_modules/@types", "./src"], // ajuste o caminho conforme necessário
     "types": ["styled-components"]
   }
+  // "include": ["src/**/*", "src/types/svg.d.ts", "src/types/images.d.ts"],
+  // "exclude": ["src/**/*.d.ts"]
 }

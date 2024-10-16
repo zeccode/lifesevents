@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid2";
 import { Typography } from "@mui/material";
 
 const About = () => {
-  const imgEvent = "/assets/imgs/seminarSpeaker.webp";
+  const imgEvent = "./assets/imgs/seminarSpeaker.webp";
   return (
     <section>
       <Grid container spacing={5}>
